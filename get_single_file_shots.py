@@ -1,6 +1,5 @@
 import json
 
-
 def parse_shot_data(data):
     shots = []
     for tag_event in data['tagEvents']:
