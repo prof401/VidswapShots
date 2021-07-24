@@ -21,5 +21,7 @@ def parse_shot_data(data):
                     team = tag_attr['value']
             if field_x != -1 and field_y != -1 and net_x != -1 and net_y != -1:
                 shot_dict = dict(result=result, field_x=field_x, field_y=field_y, net_x=net_x, net_y=net_y, team=team)
+                print(shot_dict)
+                print(tag_event['tagAttributes'])
                 shots.append(shot_dict)
     return shots
