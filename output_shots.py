@@ -13,7 +13,7 @@ with requests.Session() as session:
         for game in vs.get_season_schedule(session, season):
             all_games.append(game)
     shot_list = []
-    print(len(all_games))
+    #print(len(all_games))
     for game in all_games:
         game_json = vs.get_game_json(session, game['id'])
         for shot in gf.filter_shots(game_json):
