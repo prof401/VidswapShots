@@ -1,7 +1,7 @@
 import requests
 
+import game_filters as gf
 import point_map as pm
-import shot_parser
 import vidswap_services as vs
 
 with requests.Session() as session:
@@ -9,12 +9,13 @@ with requests.Session() as session:
     season_list = vs.get_seasons(session)
     all_games = []
     for season in season_list:
-        for game in vs.get_season_schedule(session, season):
-            all_games.append(game)
+        if (season[0] == "2020"):
+            for game in vs.get_season_schedule(session, season):
+                    all_games.append(game)
     shot_list = []
-    for game_id in all_games:
-        game_json = vs.get_game_json(session, game_id)
-        for shot in shot_parser.filter_shots(game_json):
+    for game in all_games:
+        game_json = vs.get_game_json(session, game['id'])
+        for shot in gf.filter_shots(game_json):
             shot_list.append(shot)
 
     print(len(shot_list))

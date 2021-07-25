@@ -24,16 +24,15 @@ def get_seasons(session) -> list:
 
 
 def get_season_schedule(session, season) -> list:
-    game_ids = []
-    if (season[0] == '2020'):
-        season_data = '{"scheduleId": ' + str(season[1]) + '}'
-        my_schedule = {'method': 'user.schedule.list', 'data': season_data}
-        resp = session.post(base_url, data=my_schedule)
-        data = json.loads(resp.text)
-        for game in data['data']:
-            game_ids.append(game['id'])
-        # print(data['data'][0].keys())
-    return game_ids
+    games = []
+    season_data = '{"scheduleId": ' + str(season[1]) + '}'
+    my_schedule = {'method': 'user.schedule.list', 'data': season_data}
+    resp = session.post(base_url, data=my_schedule)
+    data = json.loads(resp.text)
+    for game in data['data']:
+        games.append(game)
+    # print(data['data'][0].keys())
+    return games
 
 
 def get_game_json(session, game_id) -> dict:
