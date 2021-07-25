@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from mplsoccer import VerticalPitch
 
 
-def show_shots(shot_data):
+def map_shots(shot_data):
     pitch = VerticalPitch(pitch_color='black', line_color='white', half=True,
                           pitch_type="custom", pitch_width=56, pitch_length=120,
                           constrained_layout=True, tight_layout=False, goal_type='box',
@@ -16,9 +16,9 @@ def show_shots(shot_data):
     yd_to_m = 0.9144
 
     for shot in shot_data:
-        x_plot = ((shot['field_x'] - x_int) / x_slope * yd_to_m)
-        y_plot = (120 - ((shot['field_y'] - y_int) / y_slope * yd_to_m))
-        ax.plot(x_plot, y_plot, 'ro')
-        # print(x_plot, y_plot)
-
+        print(shot)
+        if 'Field Location' in shot:
+            x_plot = ((shot['Field Location']['x'] - x_int) / x_slope * yd_to_m)
+            y_plot = (120 - ((shot['Field Location']['y'] - y_int) / y_slope * yd_to_m))
+            ax.plot(x_plot, y_plot, 'ro')
     plt.show()

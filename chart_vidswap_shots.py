@@ -14,9 +14,9 @@ with requests.Session() as session:
     shot_list = []
     for game_id in all_games:
         game_json = vs.get_game_json(session, game_id)
-        for shot in shot_parser.parse_shot_data(game_json):
+        for shot in shot_parser.filter_shots(game_json):
             shot_list.append(shot)
 
     print(len(shot_list))
-    pm.show_shots(shot_list)
+    pm.map_shots(shot_list)
     print(all_games)
