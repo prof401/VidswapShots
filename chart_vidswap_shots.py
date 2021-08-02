@@ -1,3 +1,4 @@
+import pandas as pd
 import requests
 
 import game_filters as gf
@@ -5,19 +6,24 @@ import point_map as pm
 import vidswap_services as vs
 
 with requests.Session() as session:
+    # login
     vs.login(session)
+
+    # get all season
     season_list = vs.get_seasons(session)
+
+    # get all games for those seasons
     all_games = []
     for season in season_list:
         if season[0] == "2020":
             for game in vs.get_season_schedule(session, season):
                 all_games.append(game)
-    shot_list = []
+
+    # get shots for all those games
+    shot_df = pd.DataFrame(columns=['id'])
     for game in all_games:
         game_json = vs.get_game_json(session, game['id'])
-        for shot in gf.filter_shots(game_json):
-            shot_list.append(shot)
+        shot_df = shot_df.append(gf.shots_dataframe(game_json))
 
-    #print(len(shot_list))
-    pm.map_shots(shot_list)
-    #print(all_games)
+    # chart shots
+    pm.chart_shots(shot_df)

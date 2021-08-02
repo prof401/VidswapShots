@@ -1,13 +1,16 @@
+import configparser
 import json
 
 base_url = 'https://app.vidswap.com/api'
 game_json_url = base_url + "?method=user.timeline.exportData"
 
+config_obj = configparser.ConfigParser()
+config_obj.read("config.ini")
+vidswap_config = config_obj["VidSwap"]
+
 
 def login(session):
-    with open('account.txt') as f:
-        file_data = [x.rstrip() for x in f]
-    login_data = '{"username": "' + file_data[0] + '", "password": "' + file_data[1] + '"}'
+    login_data = '{"username": "' + vidswap_config["username"] + '", "password": "' + vidswap_config["password"] + '"}'
     login_form = {'method': 'user.account.authenticate', 'data': login_data}
     login_resp = session.post(base_url, login_form)
 
