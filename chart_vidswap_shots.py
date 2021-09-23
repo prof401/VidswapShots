@@ -17,6 +17,8 @@ with requests.Session() as session:
     for season in season_list:
         if season[0] == "2020":
             for game in vs.get_season_schedule(session, season):
+                game_json = vs.get_game_json(session, game['id'])
+                shot_df = shot_df.append(gf.shots_dataframe(game_json))
                 all_games.append(game)
 
     # get shots for all those games
