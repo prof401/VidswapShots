@@ -37,6 +37,16 @@ def get_season_schedule(session, season) -> list:
     # print(data['data'][0].keys())
     return games
 
+def get_season_playlist(session, season) -> list:
+    games = []
+    season_data = '{"seasonId": ' + str(season) + ',"type":"game"}'
+    my_schedule = {'method': 'user.playlist.list', 'data': season_data}
+    resp = session.post(base_url, data=my_schedule)
+    data = json.loads(resp.text)
+    for game in data['data']:
+        if game['logged']:
+            games.append(game)
+    return games
 
 def get_game_json(session, game_id) -> dict:
     playlist_data = '{"playlistId": ' + str(game_id) + '}'
