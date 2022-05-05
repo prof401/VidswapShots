@@ -20,7 +20,7 @@ with requests.Session() as session:
         print("Error while connecting to PostgreSQL", error)
 
     mydb = client["games"]
-    mycol = mydb["conference"]
+    mycol = mydb["vidswap"]
 
 # get all games for those seasons
     print("start vidswap")
